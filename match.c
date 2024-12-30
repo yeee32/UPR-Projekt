@@ -13,16 +13,18 @@ void readIds(FILE* matchFile, int* IDsArr){
 }
 
 
-void setStats(FILE* matchFIle, int matchStats[3][3]){
+void setStats(FILE* matchFIle, int* kills, int* assists, int* deaths){
     char buffer[256];
     char delims[3] = ",;";
     if(fgets(buffer, sizeof(buffer), matchFIle)){
         char* token = strtok(buffer, delims);
-        for(int idIndex = 0; idIndex < 3; idIndex++){
-            for(int statIndex = 0; statIndex < 3; statIndex++){
-                matchStats[idIndex][statIndex] = atoi(token);
-                token = strtok(NULL, delims);
-            }
+        for(int i = 0; i < 3; i++){
+            kills[i] = atoi(token);
+            token = strtok(NULL, delims);
+            assists[i] = atoi(token);
+            token = strtok(NULL, delims);
+            deaths[i] = atoi(token);
+            token = strtok(NULL, delims);
         }
     }
 }
@@ -53,18 +55,22 @@ void processMatch(Player* players, int playerCount, FILE* matchFile){
     char buffer[256];
     int redIDs[3] = {0};
     int blueIDs[3] = {0};
-    int redKAD[3][3] = {0};
-    int blueKAD[3][3] = {0};
+    int redKills[3] = {0}; 
+    int redAssists[3] = {0}; 
+    int redDeaths[3] = {0};
+    int blueKills[3] = {0};
+    int blueAssists[3] = {0}; 
+    int blueDeaths[3] = {0};
     char winner[10];
 
     int redWon = 0;
     int blueWon = 0;
 
     readIds(matchFile, redIDs);
-    setStats(matchFile, redKAD);
+    setStats(matchFile, redKills, redAssists, redDeaths);
 
     readIds(matchFile, blueIDs);
-    setStats(matchFile, blueKAD);
+    setStats(matchFile, blueKills, blueAssists, blueDeaths);
 
     if(fgets(winner, sizeof(winner), matchFile)) {
         winner[strcspn(winner, "\n")] = '\0';
@@ -96,7 +102,7 @@ void processMatch(Player* players, int playerCount, FILE* matchFile){
             exit(1);
         }
         else{
-            statUpdate(&players[index], redKAD[i][0], redKAD[i][1], redKAD[i][2], 1, redWon);
+            statUpdate(&players[index], redKills[i], redAssists[i], redDeaths[i], 1, redWon);
         }
     }
 
@@ -107,7 +113,7 @@ void processMatch(Player* players, int playerCount, FILE* matchFile){
             exit(1);
         }
         else{
-            statUpdate(&players[index], blueKAD[i][0], blueKAD[i][1], blueKAD[i][2], 0, blueWon);
+            statUpdate(&players[index], blueKills[i], blueAssists[i], blueDeaths[i], 0, blueWon);
         }
     }
 }
