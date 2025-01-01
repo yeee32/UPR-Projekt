@@ -1,4 +1,5 @@
 #include "player.h"
+#include "match.h"
 
 int findPlayerById(Player* players, int playerCount, int id){
     for(int i = 0; i < playerCount; i++){
@@ -35,7 +36,7 @@ void loadPlayers(Player* players, FILE* playerFile){
     }
 }
 
-void statUpdate(Player* player, int kills, int asists, int deaths, int wasRed, int isWinner){
+void statsUpdate(Player* player, int kills, int asists, int deaths, int wasRed, int isWinner){
     player->kills += kills;
     player->assists += asists;
     player->deaths += deaths;
