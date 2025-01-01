@@ -19,11 +19,26 @@ void setStats(FILE* matchFIle, TempKAD* teamStats){
     if(fgets(buffer, sizeof(buffer), matchFIle)){
         char* token = strtok(buffer, delims);
         for(int i = 0; i < 3; i++){
+            if(token == NULL){
+                printf("wrong stats\n");
+                exit(1);
+            }
             teamStats[i].kills = atoi(token);
+
             token = strtok(NULL, delims);
+            if(token == NULL){
+                printf("wrong stats\n");
+                exit(1);
+            }
             teamStats[i].assists = atoi(token);
+
             token = strtok(NULL, delims);
+            if(token == NULL){
+                printf("wrong stats\n");
+                exit(1);
+            }
             teamStats[i].deaths = atoi(token);
+            
             token = strtok(NULL, delims);
         }
     }
@@ -57,7 +72,7 @@ void processMatch(Player* players, int playerCount, FILE* matchFile){
     TempKAD* blueStats = (TempKAD*)calloc(playerCount,sizeof(TempKAD));
     int redIDs[3] = {0};
     int blueIDs[3] = {0};
-    char winner[10];
+    char winner[10] = {0};
 
     int redWon = 0;
     int blueWon = 0;
