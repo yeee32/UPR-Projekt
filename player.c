@@ -1,5 +1,4 @@
 #include "player.h"
-#include "match.h"
 
 int findPlayerById(Player* players, int playerCount, int id){
     for(int i = 0; i < playerCount; i++){
