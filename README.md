@@ -15,6 +15,10 @@ cmake ..
 make
 ```
 ## Spuštění
-./lolstats <soubor_se_záznamy> <soubor_s_přezdívkami> <výstupní_soubor>
+```
+./lolstats <soubor_her> <soubor_hracu> <vystupni_soubor>
+```
 ### Příklad spuštění
+```
 ./lolstats matches.txt players.txt index.html
+```
