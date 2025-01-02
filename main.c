@@ -2,20 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "html.h"
 #include "player.h"
+#include "html.h"
 #include "match.h"
 #include "svg.h"
 
 
 int main(int argc, char* argv[]){
-    if (argc != 4) {
+    if (argc != 4){
         printf("invalid number of argumetns\n");
         return 1;
     }
     char* matchesPath = argv[1];
     char* playerIDPath = argv[2];
     char* outputPath = argv[3];
+    
 
     FILE* matchesFile = fopen(matchesPath, "r");
     FILE* playersFile = fopen(playerIDPath, "r");
@@ -31,11 +32,11 @@ int main(int argc, char* argv[]){
     char matchBuffer[256];
     while(fgets(matchBuffer, sizeof(matchBuffer), matchesFile)){
         matchBuffer[strcspn(matchBuffer, "\n")] = '\0';
-        if (strcmp(matchBuffer, "match") == 0){
+        if(strcmp(matchBuffer, "match") == 0){
             processMatch(players, playerCount, matchesFile);
         }
         else{
-            printf("no 'match' at the start");
+            printf("no 'match' at the start\n");
             return 1;
         }
     }
